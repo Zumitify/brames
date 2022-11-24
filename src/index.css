@@ -16,3 +16,26 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+
+.head{
+  text-align: center;
+}
+
+.head h1 {
+  font-size: 1.75rem;
+  font-weight: 900;
+}
+
+.img-container{
+  width: 300px;
+  height: 300px;
+  background-color: red;
+  border-radius: 50%;
+}
+
+.action-btn{
+  padding: 0.5rem 1.75rem;
+  border-radius: 13px;
+  border: 5px solid #76c5ff;
+}

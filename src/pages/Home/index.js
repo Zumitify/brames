@@ -7,7 +7,11 @@ const Home = () => {
     e.preventDefault();
     nav("/data",{ state: { area: e.target.value } });
   };
-
+  const goToForm = (e) => {
+    e.preventDefault()
+    nav("/intro")
+  }
+ 
   return (
     <div className="h-screen w-screen grid place-items-center">
       <div className="w-3/4 p-12 flex ">
@@ -48,6 +52,12 @@ const Home = () => {
           onClick={handleClick}
         >
           Location 3
+        </button>
+        <button
+          className="px-4 py-4 border text-lg bg-gray-50 rounded-lg hover:bg-gray-100"
+          onClick={goToForm}
+        >
+          + Add new city
         </button>
       </div>
     </div>
