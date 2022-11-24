@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import { HiOutlineArrowLeft } from "react-icons/hi";
-import Delhi from "../../assets/delhi.png";
+import Delhi from "../../assets/superimposed.jpeg";
+import BackButton from "../../components/BackButton";
+import { storage } from "../../Firebase";
+import { ref,listAll, getDownloadURL } from "firebase/storage";
 
 const Data = () => {
   const [area, setArea] = useState(null);
@@ -11,31 +13,43 @@ const Data = () => {
   const [currentConsumption, setCurrentConsumption] = useState(null);
   const [totalMapping, setTotalMapping] = useState(null);
   const [averageEnergy, setAverageEnergy] = useState(null);
+  const [imageList, setImageList] = useState([]);
 
   const location = useLocation();
 
-  console.log(location);
-
+  const imageReference = ref( storage, "maps_output/" )
   useEffect(() => {
-    fetch("https://api.covid19india.org/data.json")
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-      });
+    listAll(imageReference).then(response => {
+      response.items.forEach( image => {
+        getDownloadURL(image).then(url => {
+          setImageList((prev) => [...prev,url])
+        })
+      })
+    })
   }, []);
 
   return (
-    <div className="w-screen grid place-items-center py-12">
-      <div className="w-3/4">
+    <div className="container">
+      <div>
         <header className="w-full flex py-4">
-          <span className="flex-1">{location.state.area}</span>
-          <button className="flex items-center">
+          <span className="flex-1">
+            {/* {location.state.area} */}
+            London
+          </span>
+          {/* <button className="flex items-center" onClick={history.back()}>
             <HiOutlineArrowLeft />
             Back
-          </button>
+          </button> */}
+          <BackButton/>
         </header>
-        <img className="w-full " src={Delhi} alt="delhi" />
-        <div className="flex w-full pt-8">
+        <div className="satellite-image-container flex justify-center">
+          {/* <img src={Delhi} alt="delhi" /> */}
+          {/* {imageList.map(url => {
+            return <img src={url} alt="fetched-images"/>
+          })} */}
+          <img src={imageList[0]} alt="" />
+        </div>
+        <div className="flex justify-center w-full pt-8">
           <div className="flex-3 pr-4 ">
             <div className="grid grid-cols-3 grid-rows-2 gap-x-20 gap-y-12">
               <div className="text-2xl font-bold p-8 border rounded-lg shadow-lg">
@@ -55,34 +69,6 @@ const Data = () => {
                   Population Density
                 </div>
                 <div className="text-xl font-extrabold">234234</div>
-              </div>
-              <div className="text-2xl font-bold p-8 border rounded-lg shadow-lg">
-                <div className="text-lg pb-4 text-gray-400 font-extrabold">
-                  Current Elec. Consumption (GWh)
-                </div>
-                <div className="text-xl font-extrabold">2342323.000</div>
-              </div>
-              <div className="text-2xl font-bold p-8 border rounded-lg shadow-lg">
-                <div className="text-lg pb-4 text-gray-400 font-extrabold">
-                  Tone Mapping Confidence
-                </div>
-                <div className="text-xl font-extrabold">324.23423</div>
-              </div>
-            </div>
-          </div>
-          <div className="flex-1">
-            <div className="grid grid-rows-2 gap-y-12">
-              <div className="text-2xl font-bold p-8 border-l-8 border-red-700 ">
-                <div className="text-lg pb-4 text-gray-400 font-extrabold">
-                  Recommended Electricity Consumption(GWh)
-                </div>
-                <div className="text-3xl text-red-700 font-extrabold">25000.000</div>
-              </div>
-              <div className="text-2xl font-bold p-8 border rounded-lg shadow-lg">
-                <div className="text-lg pb-4 text-gray-400 font-extrabold">
-                  Average Energy Usage(GWh)
-                </div>
-                <div className="text-3xl font-extrabold">36.25</div>
               </div>
             </div>
           </div>

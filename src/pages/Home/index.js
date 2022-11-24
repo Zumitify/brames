@@ -9,7 +9,7 @@ const Home = () => {
   };
   const goToForm = (e) => {
     e.preventDefault()
-    nav("/intro")
+    nav("/form")
   }
  
   return (
@@ -34,24 +34,6 @@ const Home = () => {
           value="Bangalore"
         >
           Bangalore
-        </button>
-        <button
-          className="px-4 py-4 border text-lg hover:bg-gray-100"
-          onClick={handleClick}
-        >
-          Location 1
-        </button>
-        <button
-          className="px-4 py-4 border text-lg hover:bg-gray-100"
-          onClick={handleClick}
-        >
-          Location 2
-        </button>
-        <button
-          className="px-4 py-4 border text-lg hover:bg-gray-100"
-          onClick={handleClick}
-        >
-          Location 3
         </button>
         <button
           className="px-4 py-4 border text-lg bg-gray-50 rounded-lg hover:bg-gray-100"
